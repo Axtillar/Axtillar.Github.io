@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
-
 *{
     margin: 0;
     padding: 0;
@@ -226,19 +225,19 @@ span{
 
 @keyframes words{
     0%, 20%{
-        content: "Web Developer";
+        content: "Web Developer.";
     }
     21%, 40%{
-        content: "Developer";
+        content: "Developer.";
     }
     41%, 60%{
-        content: "Web Designer";
+        content: "Web Designer.";
     }
     61%, 80%{
-        content: "Youtuber";
+        content: "Youtuber.";
     }
     81%, 100%{
-        content: "Script Writer";
+        content: "Music Artist.";
     }
 }
 

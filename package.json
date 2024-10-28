@@ -3,9 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://axtillar.github.io/", 
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base=/Axtillar.Github.io/", 
     "preview": "vite preview"
   },
   "dependencies": {
@@ -24,3 +25,4 @@
     "vite": "^4.4.5"
   }
 }
+

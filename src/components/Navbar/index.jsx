@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Logo from './Logo';
+import { Link, useLocation } from 'react-router-dom';
+import Logo from '../Logo';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,17 +25,16 @@ function Navbar() {
   }, [isOpen]);
 
   const navItems = [
-    { number: '01.', text: 'Home', path: '/' },
-    { number: '02.', text: 'Services', path: '/services' },
-    { number: '03.', text: 'Resume', path: '/resume' },
-    { number: '04.', text: 'About', path: '/about' },
-    { number: '05.', text: 'Work', path: '/work' }
+    { number: '01.', text: 'About', path: '/about' },
+    { number: '02.', text: 'Experience', path: '/experience' },
+    { number: '03.', text: 'Education', path: '/education' },
+    { number: '04.', text: 'Contact', path: '/contact' },
   ];
 
   return (
     <>
       <motion.nav 
-        className={`fixed w-full px-4 md:px-12 lg:px-24 py-4 bg-[#0a192f] z-50 transition-all duration-300 ${
+        className={`fixed w-full px-6 md:px-12 lg:px-24 py-4 bg-[#0a192f] z-50 transition-all duration-300 ${
           scrolled ? 'shadow-lg bg-opacity-90 backdrop-blur-sm' : 'bg-opacity-100'
         }`}
         initial={{ y: -100 }}
@@ -54,7 +52,7 @@ function Navbar() {
               <Link
                 key={index}
                 to={item.path}
-                className={`text-slate-200 hover:text-[#64ffda] transition-colors font-mono text-sm group relative whitespace-nowrap ${
+                className={`text-slate-200 hover:text-[#64ffda] transition-colors font-mono text-sm group relative ${
                   location.pathname === item.path ? 'text-[#64ffda]' : ''
                 }`}
               >
@@ -64,14 +62,15 @@ function Navbar() {
                 }`}></span>
               </Link>
             ))}
-            <Link
-              to="/contact"
-              className={`px-5 py-2.5 bg-[#64ffda] text-[#0a192f] rounded-md font-mono text-sm font-semibold hover:bg-[#64ffda]/90 transition-all duration-300 transform hover:-translate-y-0.5 ${
-                location.pathname === '/contact' ? 'shadow-lg' : ''
-              }`}
+            
+            <a 
+              href="/resume.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="border border-[#64ffda] text-[#64ffda] px-4 py-2 rounded font-mono text-sm hover:bg-[#64ffda]/10 transition-colors"
             >
-              Hire Me
-            </Link>
+              Resume
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -114,10 +113,10 @@ function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 bottom-0 w-[min(75vw,400px)] bg-[#112240] md:hidden z-40 shadow-2xl overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-[min(75vw,400px)] bg-[#112240] md:hidden z-40 shadow-2xl"
             >
-              <div className="flex flex-col items-center justify-center min-h-full py-20 px-6">
-                <div className="space-y-8 md:space-y-12 text-center">
+              <div className="flex flex-col items-center justify-center h-full py-20">
+                <div className="space-y-12 text-center">
                   {navItems.map((item, index) => (
                     <motion.div
                       key={index}
@@ -128,7 +127,7 @@ function Navbar() {
                     >
                       <Link
                         to={item.path}
-                        className={`text-slate-200 hover:text-[#64ffda] transition-colors font-mono text-base md:text-lg inline-block ${
+                        className={`text-slate-200 hover:text-[#64ffda] transition-colors font-mono text-lg inline-block ${
                           location.pathname === item.path ? 'text-[#64ffda]' : ''
                         }`}
                         onClick={() => setIsOpen(false)}
@@ -138,18 +137,20 @@ function Navbar() {
                       </Link>
                     </motion.div>
                   ))}
+                  
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 }}
+                    transition={{ delay: 0.5 }}
                   >
-                    <Link
-                      to="/contact"
-                      className="px-8 py-3 bg-[#64ffda] text-[#0a192f] rounded-md font-mono text-base font-semibold inline-block hover:bg-[#64ffda]/90 transition-all duration-300"
-                      onClick={() => setIsOpen(false)}
+                    <a 
+                      href="/resume.pdf" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="border border-[#64ffda] text-[#64ffda] px-6 py-3 rounded font-mono text-base hover:bg-[#64ffda]/10 transition-colors mt-8 inline-block"
                     >
-                      Hire Me
-                    </Link>
+                      Resume
+                    </a>
                   </motion.div>
                 </div>
               </div>

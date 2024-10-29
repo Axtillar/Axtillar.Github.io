@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
-function SocialLinks() {
+const SocialLinks = () => {
   const links = [
-    { icon: "github", href: "https://github.com/Axtillar", label: "GitHub" },
+    { icon: "github", href: "#", label: "GitHub" },
     { icon: "instagram", href: "#", label: "Instagram" },
     { icon: "twitter", href: "#", label: "Twitter" },
     { icon: "linkedin", href: "#", label: "LinkedIn" },
@@ -31,6 +31,6 @@ function SocialLinks() {
       </ul>
     </motion.div>
   );
-}
+};
 
 export default SocialLinks;

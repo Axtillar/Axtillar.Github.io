@@ -1,71 +1,61 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import SocialLinks from './components/SocialLinks';
-import EmailLink from './components/EmailLink';
+import Footer from './components/Footer';
+import LoadingScreen from './components/LoadingScreen';
+import ScrollProgress from './components/ScrollProgress';
+
+// Lazy load pages
+const Home = lazy(() => import('./pages/Home'));
+const Services = lazy(() => import('./pages/Services'));
+const Resume = lazy(() => import('./pages/Resume'));
+const About = lazy(() => import('./pages/About'));
+const Work = lazy(() => import('./pages/Work'));
+const Contact = lazy(() => import('./pages/Contact'));
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
-  const nameVariants = {
-    initial: { opacity: 0, x: -20 },
-    animate: { 
-      opacity: 1, 
-      x: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 2000);
+  }, []);
+
+  if (loading) return <LoadingScreen />;
 
   return (
     <div className="min-h-screen bg-[#0a192f] text-white">
-      <Navbar />
-      
-      <div className="px-6 md:px-12 lg:px-24 relative">
-        <SocialLinks />
-        <EmailLink />
-        
-        <main className="max-w-5xl mx-auto pt-32">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="text-[#64ffda] font-mono text-lg mb-5">Hi, my name is [ Axtillar.]</p>
-            
-            <motion.div
-              variants={nameVariants}
-              initial="initial"
-              animate="animate"
-              className="relative"
-            >
-              <h1 className="text-5xl lg:text-7xl font-bold mb-4 text-slate-200 relative z-10 inline-block">
-                LikHon Das
-                <span className="text-[#64ffda]">.</span>
-                <div className="absolute -bottom-2 left-0 w-full h-[0.2em] bg-[#64ffda]/20"></div>
-              </h1>
-            </motion.div>
-
-            <h2 className="text-4xl lg:text-6xl font-bold mb-8 text-slate-400">
-              I build things for the web.
-            </h2>
-             <p className="text-lg text-slate-400 mb-12 leading-relaxed max-w-2xl">
-              I'm a software engineer specializing in building (and occasionally designing) 
-              exceptional digital experiences. Currently, I'm focused on building accessible, 
-              human-centered products at{' '}
-              <a 
-                href="#" 
-                className="text-[#64ffda] hover:underline"
-              >
-                Upstatement
-              </a>
-              .
-            </p>
-            <button className="border border-[#64ffda] text-[#64ffda] px-7 py-4 rounded font-mono hover:bg-[#64ffda]/10 transition-colors">
-              Check out my course!
-            </button>
-          </motion.div>
-        </main>
-      </div>
+      <BrowserRouter>
+        <ScrollProgress />
+        <ScrollToTop />
+        <Navbar />
+        <div className="px-4 md:px-8 lg:px-16 xl:px-24 relative pt-16 md:pt-0">
+          <Suspense fallback={<LoadingScreen />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/work" element={<Work />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+          <Footer />
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
